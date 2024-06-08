@@ -72,3 +72,50 @@ void swap(int*x,int*y)
     *x=*y;
     *y=temp;
 }
+
+/////
+#include<stdio.h>
+int main()
+{
+    char operation;
+    double n1,n2;
+    printf("Enter an operation +,-,*,/: \n");
+    scanf("%c",&operation);
+    printf("Enter the numbers: ");
+    scanf("%lf%lf",&n1,&n2);
+    switch(operation)
+    {
+        case '+':
+            printf("%lf + %lf = %lf",n1,n2,n1+n2);
+            break;
+        case '-':
+            printf("%lf - %lf = %lf",n1,n2,n1-n2);
+            break;
+        case '*':
+            printf("%lf * %lf = %lf",n1,n2,n1*n2);
+            break;
+        case '/':
+            printf("%lf / %lf = %lf",n1,n2,n1/n2);
+            break;
+        default:
+             printf("This does not exist");
+    }
+    return 0;
+}
+///vowels and consonants
+#include<stdio.h>
+int main()
+{
+    char C;
+    int U_vowels,L_vowels;
+    printf("Enter a character: ");
+    scanf("%c",&C);
+    U_vowels = (C=='A'|| C=='E'|| C=='I' || C=='O' || C=='U');
+    L_vowels = (C=='a' || C=='e' || C=='i' || C=='o' || C=='u');
+    if(U_vowels||L_vowels)
+    printf("It is vowel");
+    else
+    printf("Its a consonant");
+    return 0; 
+
+}
