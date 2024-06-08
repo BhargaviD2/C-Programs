@@ -1,0 +1,284 @@
+///Q4
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_ITEMS 100
+
+ 
+typedef struct {
+    int id;
+    char description[50];
+    int quantity;
+} Item;
+
+void addItem(Item *inventory, int *numItems);
+void displayInventory(Item *inventory, int numItems);
+void updateQuantity(Item *inventory, int numItems);
+void removeItem(Item *inventory, int *numItems);
+
+int main() {
+    Item inventory[MAX_ITEMS];
+    int numItems = 0;
+    char choice;
+
+    do {
+        printf("\nWarehouse Inventory Management System\n");
+        printf("a. Add Item\n");
+        printf("b. Display Inventory\n");
+        printf("c. Update Quantity\n");
+        printf("d. Remove Item\n");
+        printf("e. Exit\n");
+        printf("Enter your choice: ");
+        scanf(" %c", &choice);
+
+        switch (choice) {
+            case 'a':
+                addItem(inventory, &numItems);
+                break;
+            case 'b':
+                displayInventory(inventory, numItems);
+                break;
+            case 'c':
+                updateQuantity(inventory, numItems);
+                break;
+            case 'd':
+                removeItem(inventory, &numItems);
+                break;
+            case 'e':
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 'e');
+
+    return 0;
+}
+
+void addItem(Item *inventory, int *numItems) {
+    if (*numItems >= MAX_ITEMS) {
+        printf("Inventory full. Cannot add more items.\n");
+        return;
+    }
+
+    Item newItem;
+    printf("Enter ID: ");
+    scanf("%d", &newItem.id);
+    printf("Enter description: ");
+    scanf("%s", newItem.description);
+    printf("Enter quantity: ");
+    scanf("%d", &newItem.quantity);
+
+    inventory[*numItems] = newItem;
+    (*numItems)++;
+    printf("Item added successfully.\n");
+}
+
+void displayInventory(Item *inventory, int numItems) {
+    if (numItems == 0) {
+        printf("Inventory is empty.\n");
+        return;
+    }
+
+    printf("Inventory:\n");
+    printf("ID\tDescription\tQuantity\n");
+    for (int i = 0; i < numItems; i++) {
+        printf("%d\t%s\t\t%d\n", inventory[i].id, inventory[i].description, inventory[i].quantity);
+    }
+}
+
+void updateQuantity(Item *inventory, int numItems) {
+    if (numItems == 0) {
+        printf("Inventory is empty. Cannot update quantity.\n");
+        return;
+    }
+
+    int id, newQuantity;
+    printf("Enter ID of item to update: ");
+    scanf("%d", &id);
+
+    int found = 0;
+    for (int i = 0; i < numItems; i++) {
+        if (inventory[i].id == id) {
+            found = 1;
+            printf("Enter new quantity: ");
+            scanf("%d", &newQuantity);
+            inventory[i].quantity = newQuantity;
+            printf("Quantity updated successfully.\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Item not found.\n");
+    }
+}
+
+void removeItem(Item *inventory, int *numItems) {
+    if (*numItems == 0) {
+        printf("Inventory is empty. Cannot remove item.\n");
+        return;
+    }
+
+    int id;
+    printf("Enter ID of item to remove: ");
+    scanf("%d", &id);
+
+    int found = 0;
+    for (int i = 0; i < *numItems; i++) {
+        if (inventory[i].id == id) {
+            found = 1;
+            for (int j = i; j < *numItems - 1; j++) {
+                inventory[j] = inventory[j + 1];
+            }
+            (*numItems)--;
+            printf("Item removed successfully.\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Item not found.\n");
+    }
+}
+
+//Q5
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_BOOKS 100
+
+// Structure to represent a book
+typedef struct {
+    char title[100];
+    char author[100];
+    char ISBN[14]; // Assuming ISBN is a string with dashes
+    int numCopies;
+} Book;
+
+// Function prototypes
+void inputBookDetails(Book catalog[], int *numBooks);
+void searchByTitle(Book catalog[], int numBooks, const char *title);
+void searchByAuthor(Book catalog[], int numBooks, const char *author);
+void updateCopies(Book catalog[], int numBooks, const char *ISBN, int newCopies);
+
+int main() {
+    Book catalog[MAX_BOOKS];
+    int numBooks = 0;
+    char choice;
+
+    do {
+        printf("\nLibrary Catalog Management System\n");
+        printf("a. Input Book Details\n");
+        printf("b. Search by Title\n");
+        printf("c. Search by Author\n");
+        printf("d. Update Number of Copies\n");
+        printf("e. Exit\n");
+        printf("Enter your choice: ");
+        scanf(" %c", &choice);
+
+        switch (choice) {
+            case 'a':
+                inputBookDetails(catalog, &numBooks);
+                break;
+            case 'b': {
+                char title[100];
+                printf("Enter title to search: ");
+                scanf(" %[^\n]", title);
+                searchByTitle(catalog, numBooks, title);
+                break;
+            }
+            case 'c': {
+                char author[100];
+                printf("Enter author to search: ");
+                scanf(" %[^\n]", author);
+                searchByAuthor(catalog, numBooks, author);
+                break;
+            }
+            case 'd': {
+                char ISBN[14];
+                int newCopies;
+                printf("Enter ISBN of book to update copies: ");
+                scanf(" %s", ISBN);
+                printf("Enter new number of copies: ");
+                scanf(" %d", &newCopies);
+                updateCopies(catalog, numBooks, ISBN, newCopies);
+                break;
+            }
+            case 'e':
+                printf("Exiting...\n");
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 'e');
+
+    return 0;
+}
+
+void inputBookDetails(Book catalog[], int *numBooks) {
+    if (*numBooks >= MAX_BOOKS) {
+        printf("Catalog full. Cannot add more books.\n");
+        return;
+    }
+
+    Book newBook;
+    printf("Enter title: ");
+    scanf(" %[^\n]", newBook.title);
+    printf("Enter author: ");
+    scanf(" %[^\n]", newBook.author);
+    printf("Enter ISBN: ");
+    scanf(" %s", newBook.ISBN);
+    printf("Enter number of copies: ");
+    scanf(" %d", &newBook.numCopies);
+
+    catalog[*numBooks] = newBook;
+    (*numBooks)++;
+    printf("Book added to catalog successfully.\n");
+}
+
+void searchByTitle(Book catalog[], int numBooks, const char *title) {
+    int found = 0;
+    printf("Books with title '%s':\n", title);
+    for (int i = 0; i < numBooks; i++) {
+        if (strcmp(catalog[i].title, title) == 0) {
+            found = 1;
+            printf("Title: %s\nAuthor: %s\nISBN: %s\nNumber of Copies: %d\n\n", 
+                   catalog[i].title, catalog[i].author, catalog[i].ISBN, catalog[i].numCopies);
+        }
+    }
+    if (!found) {
+        printf("No books found with the title '%s'.\n", title);
+    }
+}
+
+void searchByAuthor(Book catalog[], int numBooks, const char *author) {
+    int found = 0;
+    printf("Books by author '%s':\n", author);
+    for (int i = 0; i < numBooks; i++) {
+        if (strcmp(catalog[i].author, author) == 0) {
+            found = 1;
+            printf("Title: %s\nAuthor: %s\nISBN: %s\nNumber of Copies: %d\n\n", 
+                   catalog[i].title, catalog[i].author, catalog[i].ISBN, catalog[i].numCopies);
+        }
+    }
+    if (!found) {
+        printf("No books found by the author '%s'.\n", author);
+    }
+}
+
+void updateCopies(Book catalog[], int numBooks, const char *ISBN, int newCopies) {
+    int found = 0;
+    for (int i = 0; i < numBooks; i++) {
+        if (strcmp(catalog[i].ISBN, ISBN) == 0) {
+            found = 1;
+            catalog[i].numCopies = newCopies;
+            printf("Number of copies updated successfully.\n");
+            break;
+        }
+    }
+    if (!found) {
+        printf("No book found with ISBN '%s'.\n", ISBN);
+    }
+}
