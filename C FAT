@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char loc[10];
+    printf("Enter the location code: ");
+    scanf("%s", loc);
+    int n = strlen(loc);
+
+    if (n < 4) {
+        if (strcmp(loc, "CHN") == 0 || strcmp(loc, "BGL") == 0 || strcmp(loc, "DEL") == 0 || strcmp(loc, "HYD") == 0 || strcmp(loc, "KLA") == 0) {
+            int valid = 1; // Assume location code is valid
+            for (int i = 0; i < n; i++) {
+                if (loc[i] == '!' || loc[i] == '@' || loc[i] == '%') {
+                    valid = 0;  
+                    break;
+                }
+            }
+            if (valid) {
+                printf("Location code is valid\n");
+            } else {
+                printf("Invalid location code: Contains special characters\n");
+            }
+        } else {
+            printf("Invalid location code: Not in the list of predefined codes\n");
+        }
+    } else {
+        printf("Invalid location code: Length is not less than 4\n");
+    }
+
+    return 0;
+}
+
