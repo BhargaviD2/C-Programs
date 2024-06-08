@@ -1,0 +1,33 @@
+//Find the roots of quadratic equation
+#include <stdio.h>
+ int main()
+ {
+     float a,b,c,D,R1,R2;
+     char ch;
+     do{
+     printf("Enter the coefficients: \n");
+     scanf("%f%f%f",&a,&b,&c);
+     D=(b*b)-(4*a*c);
+     if (D>0)
+     {
+         R1= (-b) + (sqrt(D)/(2*a));
+         R2= (-b) - (sqrt(D)/(2*a));
+         printf("Root 1= %.2f and Root 2= %.2f\n",R1,R2);
+     }
+     else if (D==0)
+     {
+        R1=R2=-b/(2*a); 
+        printf("Root 1= %.2f and Root 2= %.2f\n",R1,R2);
+     }
+     else
+     {
+        R1= (-b/(2*a)) + (sqrt(-D)/(2*a));
+        R2= (-b/(2*a)) - (sqrt(-D)/(2*a)); 
+        printf("Root 1= %.2f and Root 2= %.2f\n",R1,R2);
+     }
+     printf("do you wanna continue?\n");getchar();
+     scanf("%c",&ch);
+     }
+     while(ch=='y');
+     return 0;
+ }
