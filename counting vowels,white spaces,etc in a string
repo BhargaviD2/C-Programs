@@ -1,0 +1,26 @@
+//Count the vowels,consonants,white spaces and digits in a string
+#include<stdio.h>
+int main()
+{
+    char s1[50],V,D;
+    int n,i,vowel=0,con=0,ws=0,digits=0;
+    printf("Enter a string: \n");getchar();
+    gets(s1);
+    n=strlen(s1);
+    for(i=0;i<n=i++)
+    {
+        if(s1[i]==('a'||'e'||'i'||'o'||'u'||'A'||'E'||'I'||'O'||'U'));
+        {vowel++;}
+        else if(a<s1[i]<=z)
+        {con++;}
+        else if(0<=s1[i]<=9)
+        {digits++;}
+        else if(s[i]=' ')
+        {ws++;}
+    }
+    printf("Vowels: %d",vowel);
+    printf("Consonants: %d",con);
+    printf("digits: %d",digits);
+    printf("White spaces : %d",ws);
+    return 0;
+}
